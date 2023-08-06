@@ -1,11 +1,10 @@
 import { auth, provider } from '../../firebase-config'
 import { signInWithPopup } from 'firebase/auth'
-
 import Cookies from 'universal-cookie'
+
 const cookies = new Cookies()
 
 const Auth = ({ setIsAuth }) => {
-
     const signInWithGoogle = async () => {
         try {
             const result = await signInWithPopup(auth, provider)
