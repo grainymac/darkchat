@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './Chat.sass'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { addDoc, collection, serverTimestamp, onSnapshot, query, where } from 'firebase/firestore'
 import { db, auth } from '../../firebase-config'
 
 const Chat = ({ room }) => {
@@ -10,6 +10,11 @@ const Chat = ({ room }) => {
     const messagesRef = collection(db, 'messages')
 
     useEffect(() => {
+        const queryMessages = query(messagesRef, where("room", "==", room))
+        onSnapshot(queryMessages, (snapshot) => {
+            console.log("NEW MESSAGE")
+        })
+
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
                 setUser(user)
